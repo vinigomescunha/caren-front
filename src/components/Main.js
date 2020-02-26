@@ -1,33 +1,54 @@
 import React from 'react';
+
+// import scss file
 import '../assets/Chat.scss';
+import '../assets/Contact.scss';
+
+// chamando TemplateBuilder para criar o inicial
 import TemplateBuilder from '../templates/TemplateBuilder.jsx';
+
+// enums
 import {
-  STATUS
-} from '../enums/Status';
-import {
+  EVENTS,
+  STATUS,
   TEMPLATE
-} from '../enums/Templates.js';
+} from '../enums';
+
+// adapter mock
 import {
-  MockAdapter
-} from '../mocks/MockAdapter';
-import Message from '../domain/Message.js';
-import EVENTS from '../enums/Events';
-import User from '../domain/User';
+  MockAdapter,
+  userMe
+} from '../mocks';
+
+// domains model ... por ai 
+import {
+  Message,
+  User
+} from '../domain';
+
+
+
+const scrollToDown = (ref) => ref.scrollTo(0, ref.scrollHeight);
 // O SPA comeca aqui
 class Main extends React.Component {
   // Construtor
   constructor(props) {
     super(props);
+    // seto o status inicial
     this.state = {
       startDate: new Date(),
       status: STATUS.LOADED,
       messages: [],
       contacts: [],
       listeners: {
-        add: this.add.bind(this),
-        switchMenu: this.switchMenu.bind(this)
+        addMessage: this.addMessage.bind(this),
+        addContact: this.addContact.bind(this),
+        switchMenu: this.switchMenu.bind(this),
+        clearMessages: this.clearMessages.bind(this),
+        setRef: this.setRef.bind(this)
       },
-      eventMenu: EVENTS.DISPLAY_CHAT
+      eventMenu: EVENTS.DISPLAY_CHAT,
+      ref: React.createRef()
     };
   }
   // Hook
@@ -35,9 +56,12 @@ class Main extends React.Component {
     this.setState({
       status: STATUS.LOADING
     });
-    let messages = await MockAdapter.getAllMessages();
+    const messages = await MockAdapter.getAllMessages();
+    const contacts = await MockAdapter.getAllContacts();
+
     this.setState({
       status: STATUS.LOADED,
+      contacts,
       messages
     });
   }
@@ -55,45 +79,76 @@ class Main extends React.Component {
       eventMenu
     });
   }
-  async add(e) {
+  clearMessages() {
+    this.setState({
+      messages: []
+    });
+  }
+  // TODO: Analise se vale a pena manter no Main ou no Chat Component
+  // TODO: Desacoplar o envio e recebimento de mensagens do Evento
+  // TODO: Desacoplar o event listener para o componente
+  async addMessage(e) {
     // valido o evento de enter pra enviar, se nao for nem continuo
     if (e.key && e.key !== 'Enter') {
       return;
     }
     e.preventDefault();
     let target = (e.target ? e.target : e.target.querySelector('[data-chat-input]'));
+    target.setAttribute('disabled', true);
     let {
       messages,
       status
     } = this.state;
+    // status de espera pela msg
     status = STATUS.WAITING_SEND;
     this.setState({
       status
     });
-    if(!target.value) return;
+    if (!target.value) return;
     // espero o mock retornar os dados
     const feedback = await MockAdapter.postMessage({
       body: target.value,
-      date: new Date(),
-      user: new User({
-        name: 'OWNER',
-        picture: ''
-      })
+      date: Date.now(),
+      user: userMe
     });
     feedback.forEach(m => {
       // adiciono ao stack de mensagens
-      messages.push(new Message({
-        body: m.body,
-        date: m.date,
-        user: m.user
-      }));
+      // TODO: AnAlise de melhor local para tratar as validacoes
+      messages.push(new Message(m));
     });
-    target.value=''
+    target.value = '';
+    // done!
     status = STATUS.LOADED;
     this.setState({
       status,
       messages
     });
+    target.removeAttribute('disabled');
+    target.focus();
+    scrollToDown(this.state.ref);
+  }
+  // TODO: Analise se vale a pena manter no Main ou no Contact Component
+  async addContact(e) {
+    e.preventDefault();
+    let target = (e.target ? e.target : e.target.querySelector('[data-chat-input]'));
+    const name = target.querySelector("[data-contact-name]").value;
+    const picture = target.querySelector("[data-contact-picture]").value;
+
+    await MockAdapter.addContact(new User({
+      name,
+      picture
+    }));
+    // this.forceUpdate();
+    // poderia ter adicionado ao state somente o ultimo com push, nesse caso substituo todos
+    const contacts = await MockAdapter.getAllContacts();
+    this.setState({
+      contacts
+    });
+  }
+  setRef(input) {
+    this.setState({
+      ref: input
+    })
   }
   // Adiciono os dados que quero passar ao template 
   getData() {
@@ -102,7 +157,8 @@ class Main extends React.Component {
       contacts: this.state.contacts,
       messages: this.state.messages,
       listeners: this.state.listeners,
-      eventMenu: this.state.eventMenu
+      eventMenu: this.state.eventMenu,
+      ref: this.state.ref
     });
   }
   // Renderizador, onde busco o template Builder e passo o tipo de template e os dados

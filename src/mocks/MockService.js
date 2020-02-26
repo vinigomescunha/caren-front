@@ -1,13 +1,9 @@
 import Message from "../domain/Message";
-import User from "../domain/User";
-import moment from "moment";
-const userBot = new User({
-  name: 'Bot',
-  picture: ''
-});
-const getDateNow = (date) => moment(date).locale('pt-br').fromNow();
-export class MockService {
+import {
+  Bot
+} from './UserBot';
 
+export class MockService {
   get rawMessage() {
     return 'Lorem ipsum dolor sit amet consectetur adipiscing elit,Sed do eiusmod tempor lorem ipsum incididunt ut labore et dolore magna aliqua ipsum, Ut lorem ipsum enim ad minim veniam quis nostrud exercitation, Lorem Ullamco Lipsum laboris nisi dolor ut aliquip ex ea commodo consequat lorem ipsum, Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore, lorem ipsum eu fugiat nulla pariatur dolor sir amet, Lipsum excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit lorem ipsum anim id est laborum.';
   }
@@ -29,7 +25,6 @@ export class MockService {
   }
   // Esse servico eh mock que envia um array de respostas simulando uma api
   mockMessage(message) {
-    message.date = getDateNow(message.date);
     return new Promise(resolve => {
       setTimeout(() => {
         const now = Date.now();
@@ -37,10 +32,11 @@ export class MockService {
         let responses = [...Array(numResponses)].map((item, index) => {
           return new Message({
             body: `${this.splitedMessage[this.randomIndex]}`,
-            date: getDateNow(now + (index * 1000)),
-            user: userBot
+            date: now + (index * (parseInt(this.randomNumber / numResponses))), // Um mock para simular o tempo da resposta
+            user: Bot.getCurrentBot()
           })
         });
+        // insiro a mensagem do usuario no stack simulando serviço que buscou pilha de respostas
         responses.unshift(message);
         return resolve(responses);
       }, this.randomNumber);
@@ -54,12 +50,52 @@ export class MockService {
       setTimeout(() => resolve(
         [
           new Message({
-            body: 'Ola Fulano de tal, aqui esta um mock',
-            date: getDateNow(now),
-            user: userBot
+            body: `Ola eu sou o atendente ${Bot.getCurrentBot().name},
+            para trocar de atendente use: ${Bot.getAllBots().map(b=> `/trocar $bot ${b.name}`).join(' ou ')}`,
+            date: now,
+            user: Bot.getCurrentBot()
           })
         ]
       ), 3000);
     })
   }
+
+  static initializeAdditionalMocks() {
+    // mock stack contacts
+    MockService.contacts = [];
+    Bot.getAllBots().forEach(bot => {
+      MockService.contacts.push(bot);
+    });
+  }
+
+  // simulando uma api simples de add 
+  static mockContact(contact) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        MockService.contacts.push(contact)
+        resolve();
+      }, 2000);
+    })
+  }
+
+  static mockAllContacts() {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(MockService.contacts), 3000);
+    })
+  }
+
+  static getContactSelected(botName) {
+    return new Promise(resolve => {
+      let contactList = Bot.getAllBots().concat(MockService.contacts);
+      contactList.forEach(bot => {
+        // brincadeira onde troco de bot
+        if (bot.name.indexOf(botName) !== -1) {
+          resolve(bot);
+        }
+      });
+      // contato n encontrado
+      resolve(null);
+    });
+  }
+
 }

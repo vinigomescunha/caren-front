@@ -1,0 +1,68 @@
+.contact {
+    .modal {
+        position: fixed;
+        background-color: rgba(0, 0, 0, 0.35);
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+        transition: all 0.3s;
+    }
+
+    .modal-container {
+        margin: 0 auto;
+        width: 80vw;
+        height: 80vh;
+        background-color: #ffffff;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 999;
+        text-align: center;
+        overflow: auto;
+
+        [data-display=true] {
+            display: block;
+        }
+
+        [data-display=false] {
+            display: none;
+        }
+
+        .fechar,
+        .novo-contato,
+        .cancelar {
+            position: absolute;
+            top: .5rem;
+        }
+
+        .fechar {
+            right: .5rem;
+        }
+
+        .novo-contato,
+        .cancelar {
+            left: .5rem;
+        }
+    }
+}
+
+.lista-item {
+    padding: .2rem 1rem;
+    display: inline-block;
+    text-align: center;
+
+    img {
+        max-width: 5rem;
+        display: block;
+        margin: 0 auto;
+    }
+    [use-name] {
+        cursor: pointer;
+    }
+}
