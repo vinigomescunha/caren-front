@@ -9,6 +9,7 @@ export default class ContactComponent extends React.Component {
     this.contact = React.createRef();
     this.showHide = this.showHide.bind(this);
     this.useBot = this.useBot.bind(this);
+    this.addContact = this.addContact.bind(this);
     // this.listeners = this.props.data.listeners; perde o bind
   }
   // helper criado p ordenar contatos
@@ -26,6 +27,13 @@ export default class ContactComponent extends React.Component {
       });
     }
   }
+  addContact(e) {
+    e.persist();
+    this.props.data.listeners.addContact(e)
+      .then(res => {
+        this.showHide(e);
+      });
+  }
   // TODO: Analise de melhor local pra inserir os tratamentos de dados
   useBot(e) {
     MockAdapter.setCurrentBot(e)
@@ -41,9 +49,12 @@ export default class ContactComponent extends React.Component {
       <div className="contact" ref={(ref) => { this.contact.current = ref }}>
         <div className="modal" onClick={this.props.data.listeners.switchMenu}></div>
         <div className="modal-container">
+
           <button className="fechar" onClick={this.props.data.listeners.switchMenu}>Fechar</button>
-          <form data-display={false} onSubmit={this.props.data.listeners.addContact}>
+          {this.props.data.status === STATUS.LOADED ? '' : this.props.data.status}
+          <form data-display={false} onSubmit={this.addContact}>
             <button className="cancelar" onClick={this.showHide}>Cancelar</button>
+            <h2>Adicionar Contato</h2>
             <p>
               <input data-contact-name type="text" placeholder="Nome" />
             </p>
@@ -61,13 +72,12 @@ export default class ContactComponent extends React.Component {
             <button className="novo-contato" onClick={this.showHide}>Novo Contato</button>
             <h2>Lista de Contatos</h2>
             <div className="lista-container">
-            {this.props.data.status === STATUS.LOADED ? '' : this.props.data.status}
               {this.orderHelper(this.props.data.contacts).map(
                 (m, index) => (
                   <div className="lista-item" key={index}>
                     <div>
-                      <img alt={m.name} src={m.picture} />
-                      <div>{m.name}</div>
+                      <img className="item-picture" title={m.name} alt={m.name} src={m.picture} />
+                      <div className="item-name">{m.name}</div>
                       <div title="Conversar com esse Bot" use-name={m.name} onClick={() => this.useBot(m.name)}> Usar</div>
                     </div>
                   </div>

@@ -26,11 +26,9 @@ import {
   User
 } from '../domain';
 
-
-
 const scrollToDown = (ref) => ref.scrollTo(0, ref.scrollHeight);
 // O SPA comeca aqui
-class Main extends React.Component {
+export default class Main extends React.Component {
   // Construtor
   constructor(props) {
     super(props);
@@ -96,13 +94,11 @@ class Main extends React.Component {
     let target = (e.target ? e.target : e.target.querySelector('[data-chat-input]'));
     target.setAttribute('disabled', true);
     let {
-      messages,
-      status
+      messages
     } = this.state;
     // status de espera pela msg
-    status = STATUS.WAITING_SEND;
     this.setState({
-      status
+      status: STATUS.WAITING_SEND
     });
     if (!target.value) return;
     // espero o mock retornar os dados
@@ -118,9 +114,8 @@ class Main extends React.Component {
     });
     target.value = '';
     // done!
-    status = STATUS.LOADED;
     this.setState({
-      status,
+      status: STATUS.LOADED,
       messages
     });
     target.removeAttribute('disabled');
@@ -133,7 +128,9 @@ class Main extends React.Component {
     let target = (e.target ? e.target : e.target.querySelector('[data-chat-input]'));
     const name = target.querySelector("[data-contact-name]").value;
     const picture = target.querySelector("[data-contact-picture]").value;
-
+    this.setState({
+      status: STATUS.WAITING_ADD
+    });
     await MockAdapter.addContact(new User({
       name,
       picture
@@ -142,8 +139,10 @@ class Main extends React.Component {
     // poderia ter adicionado ao state somente o ultimo com push, nesse caso substituo todos
     const contacts = await MockAdapter.getAllContacts();
     this.setState({
-      contacts
+      contacts,
+      status: STATUS.LOADED
     });
+    return true;
   }
   setRef(input) {
     this.setState({
@@ -173,4 +172,3 @@ class Main extends React.Component {
     />;
   }
 }
-export default Main;

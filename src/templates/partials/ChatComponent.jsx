@@ -19,7 +19,7 @@ export default class ChatComponent extends React.Component {
           (m, index) => (
             <div key={`L${index}`} className="list" data-dialog={m.user.type === USER.LOGGED ? 'OWNER' : 'BOT'}>
               <span key={index}>
-                {m.user.type !== USER.LOGGED ? <span data-picture><img alt={m.user.name} src={m.user.picture} /></span> : ''}
+                {m.user.type !== USER.LOGGED ? <span data-picture><img title={m.user.name} alt={m.user.name} src={m.user.picture} /></span> : ''}
                 <span data-content>{m.body}</span>
                 <b title={getDateFormat(m.date)}>{getDateNow(m.date)}</b>
               </span>
