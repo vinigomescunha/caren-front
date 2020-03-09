@@ -1,0 +1,131 @@
+.desafio {
+  .modal-container {
+    width: 99%;
+    height: 99%;
+
+    .fechar {
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+    }
+  }
+}
+
+.button-0 {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50% !important;
+  border: 0 !important;
+  position: absolute !important;
+
+  .MuiButton-label {
+    border: 0;
+    width: 4rem;
+    height: 4rem;
+    background-color: #75C4BE;
+    border-radius: 50%;
+  }
+
+  .MuiButton-label {
+    position: relative;
+
+    .label-fixed {
+      position: absolute;
+      width: 160%;
+      height: 160%;
+      left: -30%;
+      top: -30%;
+      background-color: rgba(65, 165, 156, .5);
+      border-radius: 50%;
+      transition: all 2s ease-out;
+    }
+  }
+
+}
+
+.main-item {
+  display: flex;
+  width: 100%;
+
+  .image-item {
+    max-width: 48%;
+    display: inline-flex;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+  }
+
+  .dialog-item {
+    max-width: 52%;
+    width: 100%;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    box-shadow: -9px 9px 5px rgba(50, 50, 50, 0.77);
+    border: 1px solid rgba(114, 109, 105, .5);
+    height: 100vh;
+    display: inline-flex;
+  }
+}
+
+.dialog-indicator {
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  left: calc(-1rem - 1px);
+  z-index: 2;
+  background: #fff;
+  transform: rotate(45deg);
+  border-left: 1px solid #333;
+  border-bottom: 1px solid #333;
+  box-shadow: -4px 7px 6px rgba(50, 50, 50, 0.77);
+}
+
+.rc-slider-mark {
+  left: 2rem !important;
+  top: -1rem !important;
+}
+
+.rc-slider-dot {
+  border-radius: 0 !important;
+  width: 2px !important;
+  border: gray !important;
+  background-color: gray !important;
+}
+
+.rc-slider-handle {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background-color: green !important;
+}
+
+.rc-slider-track {
+  background-color: rgba(50, 116, 50, .5) !important;
+}
+
+.rc-slider-dot-active {
+  border: 0 !important;
+  background: gray !important;
+}
+
+.rc-slider-handle-dragging {
+  border: 0 !important;
+}
+
+.rc-slider-handle:active {
+  box-shadow: none !important;
+}
+
+line.recharts-yAxis {
+  &.yAxis {
+    display: none !important;
+  }
+}
+
+.recharts-cartesian-grid {
+  .recharts-cartesian-grid-vertical {
+    line {
+      display: none !important;
+    }
+  }
+}
