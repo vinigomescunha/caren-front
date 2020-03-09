@@ -12,27 +12,39 @@ export default class MainComponent extends React.Component {
   // eslint-disable-next-line no-useless-constructor
   constructor(props) {
     super(props);
-    this.listeners = this.props.data.listeners;
+  }
+  // analise do evento disparado e o template esperado
+  getTemplateNameByEvent() {
+    switch (this.props.data.eventMenu) {
+      case EVENTS.DISPLAY_CHAT:
+        return TEMPLATE.CHAT;
+      case EVENTS.DISPLAY_CONTACT:
+        return TEMPLATE.CONTACT;
+      case EVENTS.DISPLAY_DESAFIO_P2:
+        return TEMPLATE.DESAFIO_P2;
+      default:
+        return TEMPLATE.CHAT;
+    }
   }
 
   render() {
     return (
       <div className="main">
         <nav className="main-nav">
-          <div className="item-nav" onClick={this.listeners.switchMenu} title="Contato">
-            <img className="main-logo" alt="Contato medico" src={contact} />
+          <div className="item-nav" menu={EVENTS.DISPLAY_CONTACT} onClick={this.props.data.listeners.switchMenu} title="Contato">
+            <img className="main-logo" alt="Contato Medico" src={contact} />
           </div>
-          <div className="item-nav">
-            <img className="main-logo" alt="cruz de enfermaria" title="Logo" src={logo} />
+          <div className="item-nav" menu={EVENTS.DISPLAY_DESAFIO_P2} onClick={this.props.data.listeners.switchMenu} title="Desafio Parte 2">
+            <img className="main-logo" alt="Cruz de Enfermaria" title="Logo" src={logo} />
           </div>
-          <div className="item-nav">
-            <img className="main-logo" alt="titar-foto" title="Camera tirar foto" src={camera} />
+          <div className="item-nav" >
+            <img className="main-logo" alt="Tirar foto" title="Camera tirar foto" src={camera} />
           </div>
         </nav>
         <header className="main-header">
           <TemplateBuilder
             type={
-              this.props.data.eventMenu === EVENTS.DISPLAY_CHAT ? TEMPLATE.CHAT : TEMPLATE.CONTACT
+              this.getTemplateNameByEvent()
             }
             data={
               this.props.data
