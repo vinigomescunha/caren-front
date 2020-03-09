@@ -1,9 +1,5 @@
 import React from 'react';
 
-// import scss file
-import '../assets/Chat.scss';
-import '../assets/Contact.scss';
-
 // chamando TemplateBuilder para criar o inicial
 import TemplateBuilder from '../templates/TemplateBuilder.jsx';
 
@@ -68,11 +64,11 @@ export default class Main extends React.Component {
   // Hook
   componentDidUpdate(prevProps, prevState) {}
   async switchMenu(e) {
-    e.preventDefault();
+    e.persist();
     let {
       eventMenu
     } = this.state;
-    eventMenu = eventMenu === EVENTS.DISPLAY_CHAT ? EVENTS.DISPLAY_CONTACT : EVENTS.DISPLAY_CHAT;
+    eventMenu = e.currentTarget.getAttribute('menu');
     this.setState({
       eventMenu
     });
@@ -100,19 +96,22 @@ export default class Main extends React.Component {
     this.setState({
       status: STATUS.WAITING_SEND
     });
-    if (!target.value) return;
-    // espero o mock retornar os dados
-    const feedback = await MockAdapter.postMessage({
-      body: target.value,
-      date: Date.now(),
-      user: userMe
-    });
-    feedback.forEach(m => {
-      // adiciono ao stack de mensagens
-      // TODO: AnAlise de melhor local para tratar as validacoes
-      messages.push(new Message(m));
-    });
-    target.value = '';
+    if (target && target.value) {
+      // espero o mock retornar os dados
+      const feedback = await MockAdapter.postMessage({
+        body: target.value,
+        date: Date.now(),
+        user: userMe
+      });
+      feedback.forEach(m => {
+        // adiciono ao stack de mensagens
+        // TODO: AnAlise de melhor local para tratar as validacoes
+        messages.push(new Message(m));
+      });
+      target.value = '';
+    } else {
+      // libero o input do chat silenciosamente
+    }
     // done!
     this.setState({
       status: STATUS.LOADED,
