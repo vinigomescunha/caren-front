@@ -24,7 +24,6 @@ export const userBot3 = new User({
   name: 'BOT 3',
   picture: '/bot3-mini.png',
   description: `/trocar $bot BOT 3`
-
 });
 
 export class Bot {
