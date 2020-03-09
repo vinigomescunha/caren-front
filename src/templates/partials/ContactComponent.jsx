@@ -1,6 +1,7 @@
 import React from "react";
 import { MockAdapter } from '../../mocks';
-import { STATUS } from '../../enums';
+import { STATUS, EVENTS } from '../../enums';
+import '../../assets/Contact.scss';
 
 export default class ContactComponent extends React.Component {
   // eslint-disable-next-line no-useless-constructor
@@ -36,10 +37,12 @@ export default class ContactComponent extends React.Component {
   }
   // TODO: Analise de melhor local pra inserir os tratamentos de dados
   useBot(e) {
+    e.persist();
     MockAdapter.setCurrentBot(e)
       .then(res => {
-        this.props.data.listeners.clearMessages(new Event('click')); // aqui esta disperso, criar um modelo para manipular
-        this.props.data.listeners.switchMenu(new Event('click')); // nesses casos o evento click nao precisa acontecer por padrao
+        this.props.data.listeners.clearMessages(e);
+        // no template atribuo o fechar para a tela de chat que esta na parte principal
+        this.props.data.listeners.switchMenu(e);
       }); // nao vou colocar catch porque no momento esta como mock
   }
 
@@ -47,10 +50,10 @@ export default class ContactComponent extends React.Component {
 
     return (
       <div className="contact" ref={(ref) => { this.contact.current = ref }}>
-        <div className="modal" onClick={this.props.data.listeners.switchMenu}></div>
+        <div className="modal" menu={EVENTS.DISPLAY_CHAT} onClick={this.props.data.listeners.switchMenu}></div>
         <div className="modal-container">
 
-          <button className="fechar" onClick={this.props.data.listeners.switchMenu}>Fechar</button>
+          <button className="fechar" menu={EVENTS.DISPLAY_CHAT} onClick={this.props.data.listeners.switchMenu}>Fechar</button>
           {this.props.data.status === STATUS.LOADED ? '' : this.props.data.status}
           <form data-display={false} onSubmit={this.addContact}>
             <button className="cancelar" onClick={this.showHide}>Cancelar</button>
