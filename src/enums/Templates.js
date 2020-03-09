@@ -2,5 +2,6 @@
 export const TEMPLATE = {
     MAIN: 'PRINCIPAL',
     CONTACT: 'CONTATO',
-    CHAT: 'CHAT'
+    CHAT: 'CHAT',
+    DESAFIO_P2: 'DESAFIO_PARTE_2'
 };
