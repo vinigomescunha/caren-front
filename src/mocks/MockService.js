@@ -2,6 +2,10 @@ import Message from "../domain/Message";
 import {
   Bot
 } from './UserBot';
+import {
+  doencasMock,
+  getDefaultTimestamp
+} from "./Desafio2";
 
 export class MockService {
   get rawMessage() {
@@ -96,6 +100,16 @@ export class MockService {
       // contato n encontrado
       resolve(null);
     });
+  }
+
+  static getDoencasMock() {
+    return new Promise(resolve => {
+      resolve(doencasMock);
+    })
+  }
+  // Esse caso e redundante  mas se fosse um sistema externo que enviasse metodos seria dessa forma
+  static getDefaultSelectedTimesTamp() {
+    return getDefaultTimestamp
   }
 
 }

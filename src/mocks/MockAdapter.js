@@ -42,4 +42,13 @@ export class MockAdapter {
       }
     });
   }
+  static getCurrentBot() {
+    return Bot.getCurrentBot();
+  }
+  static async getDesafio2Mocks() {
+   return MockService.getDoencasMock();
+  }
+  static defaultTimestamp() {
+    return MockService.getDefaultSelectedTimesTamp();
+  }
 }
