@@ -2,6 +2,7 @@
 import React from "react";
 import moment from "moment";
 import { STATUS, USER } from '../../enums';
+import '../../assets/Chat.scss';
 
 const getDateNow = (date) => moment(new Date(parseInt(date))).locale('pt-br').fromNow();
 const getDateFormat = (date) => moment(new Date(parseInt(date))).locale('pt-br').format('DD/MM/YYYY h:mm:ss a');
