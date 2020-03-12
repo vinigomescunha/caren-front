@@ -10,6 +10,7 @@ import assetBodyFront from '../../assets/body-front.jpg';
 import { MockAdapter } from '../../mocks';
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import '../../assets/fonts/style.scss'
 import ButtonComponent from './DesafioP2/ButtonComponent';
 import DialogComponent from './DesafioP2/DialogComponent';
 import {
@@ -44,6 +45,7 @@ export default class DesafioP2Component extends React.Component {
     this.selectId = this.selectId.bind(this);
     // Trabalhando dessa forma tenho o elemento pra manipular 
     this.buttonRef = React.createRef();
+    this.imageRef = React.createRef();
     // nesse caso vai dar set nos refs nao seria a melhor escolha, poderia setar o tamanho do botao na mao
     this.buttonComponent = React.forwardRef((props, ref) => (
       <ButtonComponent
@@ -65,6 +67,7 @@ export default class DesafioP2Component extends React.Component {
     this.dialogComponent = React.forwardRef((props, ref) => (
       <DialogComponent
         innerRef={this.dialogRef}
+        imageRef={this.imageRef}
         data={props.data}
         buttonRef={this.buttonRef.current} />
     ));
@@ -110,8 +113,6 @@ export default class DesafioP2Component extends React.Component {
    * @returns {Void}
    */
   selectId(id) {
-    console.log(this.buttonRef.current)
-    console.log(getRemSize(this.buttonRef.current), this.dialogRef, 'REFB');
     return (ev) => {
       this.setState({ idSelected: id });
     }
@@ -166,24 +167,7 @@ export default class DesafioP2Component extends React.Component {
    */
   getMarks() {
     // adiciono no final do stack o ano atual, para nao acontecer de criar um slider vazio
-    const thisYear = [
-      new Date().getFullYear()
-    ];
-    // const generateYears = () => {
-    //   // mock de anos
-    //   // Esse cara bloquearia o event loop, poderia ser uma recursao mas como e exemplo
-    //   let year = 1940,
-    //     years = [];
-    //   while (year <= 2000) {
-    //     years.push(year);
-    //     year += 10;
-    //   }
-    //   return years;
-    // };
-
-
-    const lastYears = [];//generateYears(); // gerando anos para mock
-    let mrks = thisYear.concat(lastYears)
+    let mrks = [new Date().getFullYear()]
       // concateno todas as datas de inicio 
       .concat(
         this.state.data
@@ -196,9 +180,6 @@ export default class DesafioP2Component extends React.Component {
           .filter(d => d.date.end !== null)
           // retorno o ano das datas finais
           .map(d => d.date.end.getFullYear()).filter(filterDontRepeat))
-    // caso esteja vazio adiciono dados do range inicial
-    // .concat(this.state.data.length !== 0 ? [1970] : []);
-
     // faco um fix pra evitar que o slider seja apresentado com somente um elemento,
     // adicionando o ano anterior, assim o slide nao fica desconexo na tela
     if (mrks.length === 1) {
@@ -244,26 +225,39 @@ export default class DesafioP2Component extends React.Component {
               <div style={
                 {
                   width: '70vw',
-                  margin: '0 auto'
+                  margin: '0 auto',
+                  borderRadius: '.5rem',
+                  border: '1px solid gray'
                 }
               }>
-                <div>ELLEN`S MEDICAL JOURNAL <div style={{ float: 'right' }}><button>BY DATE</button><button>BY CONDITION</button><button>BY TYPE</button></div></div>
-                <div className="main-item" style={{ padding: '2rem 4rem', width: `calc(100% - 8rem)` }}>
-                  <div style={{ maxWidth: '48%', width: '100%' }}>+</div>
-                  <div style={{ maxWidth: '52%', width: '100%' }}>
-                    <div>
+                <div className="top-item">
+                  <div style={{ display: 'inline' }}>
+                    <div style={{ display: 'inline-block', width: '50%', textAlign: 'left' }}>ELLEN`S MEDICAL JOURNAL</div>
+                    <div style={{ display: 'inline-block', width: '50%', textAlign: 'right' }}>
+                      <button>BY DATE</button>
+                      <button>BY CONDITION</button>
+                      <button>BY TYPE</button>
+                    </div>
+                  </div>
+                </div>
+                <div className="main-item">
+                  <div style={{ maxWidth: '50%', width: '100%', textAlign: 'right' }}>
+                    <button style={{ margin: 'auto auto auto 0', display: 'block', borderRadius: '50%', border: '2px double #ccc', color: 'gray', height: '1.5rem', width: '1.5rem', cursor: 'pointer' }}>+</button>
+                  </div>
+                  <div style={{ maxWidth: '50%', width: '100%' }}>
+                    <div style={{ width: '80%', margin: 'auto 0 auto auto', padding: '0 .5rem' }}>
                       {
                         (<Range reverse min={1} max={100} marks={this.getMarksObj()} step={null} onChange={this.setFilter} defaultValue={this.state.value} />)
                       }
                     </div>
                   </div>
                 </div>
-                <div className="main-item">
-                  <div className="image-item">
+                <div className="main-item container-item">
+                  <div ref={this.imageRef} className="image-item">
                     <img src={assetBodyFront} alt="corpo" style={
                       {
                         width: '100%',
-                        height: '100%'
+                        maxHeight: '100%'
                       }
                     }></img>
                     {
@@ -274,7 +268,7 @@ export default class DesafioP2Component extends React.Component {
                     }
                   </div>
                   <div className="dialog-item">
-                    <this.dialogComponent data={this.getSelected()} />
+                    <this.dialogComponent imageRef={this.imageRef} data={this.getSelected()} />
                   </div>
                 </div>
               </div>
