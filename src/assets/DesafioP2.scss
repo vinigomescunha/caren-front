@@ -1,4 +1,5 @@
 .desafio {
+  font-family: 'NotoSansNormal';
   .modal-container {
     width: 99%;
     height: 99%;
@@ -9,6 +10,42 @@
       cursor: pointer;
     }
   }
+  .top-item {
+     padding: 1rem;
+    border-bottom: 1px solid gray;
+  }
+
+.main-item {
+    display: flex;
+    margin: 0 auto;
+    width: calc(100% - 2rem);
+    padding: 1rem;
+    border-bottom: 1px solid gray;
+    &.container-item {
+      width: calc(100% - 4rem);
+      padding: 2rem;
+    }
+
+  .image-item {
+    max-width: 48%;
+    display: inline-flex;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+  }
+
+  .dialog-item {
+    max-width: 52%;
+    width: 100%;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    box-shadow: -9px 9px 5px rgba(198, 198, 198, .77);
+    border: 1px solid rgba(114, 109, 105, .5);
+    height: 120vh;
+    display: inline-flex;
+  }
+}
 }
 
 .button-0 {
@@ -43,30 +80,6 @@
 
 }
 
-.main-item {
-  display: flex;
-  width: 100%;
-
-  .image-item {
-    max-width: 48%;
-    display: inline-flex;
-    height: 100vh;
-    width: 100%;
-    position: relative;
-  }
-
-  .dialog-item {
-    max-width: 52%;
-    width: 100%;
-    position: relative;
-    z-index: 0;
-    border-radius: 10px;
-    box-shadow: -9px 9px 5px rgba(50, 50, 50, 0.77);
-    border: 1px solid rgba(114, 109, 105, .5);
-    height: 100vh;
-    display: inline-flex;
-  }
-}
 
 .dialog-indicator {
   width: 2rem;
@@ -76,14 +89,14 @@
   z-index: 2;
   background: #fff;
   transform: rotate(45deg);
-  border-left: 1px solid #333;
-  border-bottom: 1px solid #333;
-  box-shadow: -4px 7px 6px rgba(50, 50, 50, 0.77);
+  box-shadow: -4px 7px 6px rgba(198, 198, 198, .77);
 }
-
+.rc-slider {
+  margin-top: 1rem;
+}
 .rc-slider-mark {
   left: 2rem !important;
-  top: -1rem !important;
+  top: -1.2rem !important;
 }
 
 .rc-slider-dot {
@@ -96,11 +109,11 @@
 .rc-slider-handle {
   border: 0 !important;
   border-radius: 0 !important;
-  background-color: green !important;
+  background-color: #75C4BE !important;
 }
 
 .rc-slider-track {
-  background-color: rgba(50, 116, 50, .5) !important;
+  background-color: rgba(50, 116, 50, .4) !important;
 }
 
 .rc-slider-dot-active {
@@ -126,6 +139,75 @@ line.recharts-yAxis {
   .recharts-cartesian-grid-vertical {
     line {
       display: none !important;
+    }
+  }
+}
+
+.dialog-container {
+  .dialog-sub-container {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+
+    .dialog-window {
+      padding: 1rem;
+      width: calc(100% - 2rem);
+      height: calc(100% - 2rem);
+      display: block;
+      text-align: left;
+
+      .dialog-top-status {
+        text-align: right;
+        color: #dac723;
+        font-size: .8rem;
+        font-family: NotoSansNormal;
+      }
+
+      .dialog-middle-status {
+        padding: 0 2rem;
+
+        .dialog-middle-info {
+          padding: 0 0 2rem 0;
+          border-bottom: 1px dotted #333;
+
+          .dialog-middle-title {
+            padding: 0;
+            margin-top: 0;
+            color: #75C4BE;
+          }
+
+          .dialog-middle-description {
+            font-size: .9rem;
+            max-height: 5rem;
+            overflow-y: auto;
+          }
+        }
+      }
+
+      .dialog-middle-medications {
+        padding: 2rem 0 0 0;
+        border-bottom: 1px dotted #333;
+
+        .dialog-middle-medications-container {
+          display: inline-block;
+          width: 50%;
+          vertical-align: top;
+        }
+
+        .dialog-middle-medications-container:first-child {
+          display: inline-block;
+          width: 50%;
+          vertical-align: top;
+        }
+
+        .dialog-middle-medications-container:last-child {
+          padding-left: 1rem;
+          width: calc( 50% - 1rem - 1px );
+          border-left: 1px solid gray;
+        }
+      }
     }
   }
 }
