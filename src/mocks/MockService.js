@@ -3,8 +3,7 @@ import {
   Bot
 } from './UserBot';
 import {
-  doencasMock,
-  getDefaultTimestamp
+  doencasMock
 } from "./Desafio2";
 
 export class MockService {
@@ -106,10 +105,6 @@ export class MockService {
     return new Promise(resolve => {
       resolve(doencasMock);
     })
-  }
-  // Esse caso e redundante  mas se fosse um sistema externo que enviasse metodos seria dessa forma
-  static getDefaultSelectedTimesTamp() {
-    return getDefaultTimestamp
   }
 
 }
