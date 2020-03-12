@@ -1,5 +1,6 @@
 .desafio {
   font-family: 'NotoSansNormal';
+
   .modal-container {
     width: 99%;
     height: 99%;
@@ -10,42 +11,43 @@
       cursor: pointer;
     }
   }
+
   .top-item {
-     padding: 1rem;
+    padding: 1rem;
     border-bottom: 1px solid gray;
   }
 
-.main-item {
+  .main-item {
     display: flex;
     margin: 0 auto;
     width: calc(100% - 2rem);
     padding: 1rem;
     border-bottom: 1px solid gray;
+
     &.container-item {
       width: calc(100% - 4rem);
       padding: 2rem;
     }
 
-  .image-item {
-    max-width: 48%;
-    display: inline-flex;
-    height: 100vh;
-    width: 100%;
-    position: relative;
-  }
+    .image-item {
+      max-width: 48%;
+      display: inline-flex;
+      height: 100vh;
+      width: 100%;
+      position: relative;
+    }
 
-  .dialog-item {
-    max-width: 52%;
-    width: 100%;
-    position: relative;
-    z-index: 0;
-    border-radius: 10px;
-    box-shadow: -9px 9px 5px rgba(198, 198, 198, .77);
-    border: 1px solid rgba(114, 109, 105, .5);
-    height: 120vh;
-    display: inline-flex;
+    .dialog-item {
+      max-width: 52%;
+      width: 100%;
+      position: relative;
+      z-index: 0;
+      border-radius: 10px;
+      box-shadow: -9px 9px 5px rgba(198, 198, 198, .77);
+      border: 1px solid rgba(114, 109, 105, .5);
+      display: inline-flex;
+    }
   }
-}
 }
 
 .button-0 {
@@ -91,9 +93,11 @@
   transform: rotate(45deg);
   box-shadow: -4px 7px 6px rgba(198, 198, 198, .77);
 }
+
 .rc-slider {
   margin-top: 1rem;
 }
+
 .rc-slider-mark {
   left: 2rem !important;
   top: -1.2rem !important;
@@ -150,6 +154,7 @@ line.recharts-yAxis {
     width: 100%;
     height: 100%;
     border-radius: 10px;
+    display: contents;
 
     .dialog-window {
       padding: 1rem;
@@ -157,6 +162,12 @@ line.recharts-yAxis {
       height: calc(100% - 2rem);
       display: block;
       text-align: left;
+
+      .dialog-title {
+        color: #75C4BE;
+        font-family: NotoSansNormalSemiBold;
+        display: block;
+      }
 
       .dialog-top-status {
         text-align: right;
@@ -182,6 +193,7 @@ line.recharts-yAxis {
             font-size: .9rem;
             max-height: 5rem;
             overflow-y: auto;
+            height: 5rem;
           }
         }
       }
@@ -204,7 +216,7 @@ line.recharts-yAxis {
 
         .dialog-middle-medications-container:last-child {
           padding-left: 1rem;
-          width: calc( 50% - 1rem - 1px );
+          width: calc(50% - 1rem - 1px);
           border-left: 1px solid gray;
         }
       }

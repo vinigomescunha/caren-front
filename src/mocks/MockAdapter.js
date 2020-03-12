@@ -46,7 +46,14 @@ export class MockAdapter {
     return Bot.getCurrentBot();
   }
   static async getDesafio2Mocks() {
-   return MockService.getDoencasMock();
+    return (await MockService.getDoencasMock()).map(d => {
+      const repeatedItems = d.last_checks;
+      for (let i = 0; i <= 200; i++) {
+        d.last_checks.push(repeatedItems[0]);
+        d.last_checks.push(repeatedItems[1]);
+      }
+      return d;
+    });
   }
   static defaultTimestamp() {
     return MockService.getDefaultSelectedTimesTamp();

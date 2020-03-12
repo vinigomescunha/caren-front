@@ -24,40 +24,53 @@ export const doencasMock = [{
     ],
     medications_history: [ // imagino como se o back end ja mandasse formatado
       {
-        name: 'JAN', dur: 5, freq: 14,
+        name: 'JAN',
+        dur: 5,
+        freq: 14,
       },
       {
-        name: 'FEV', dur: 8, freq: 15,
+        name: 'FEV',
+        dur: 8,
+        freq: 15,
       },
       {
-        name: 'MAR', dur: 13, freq: 9,
+        name: 'MAR',
+        dur: 13,
+        freq: 9,
       },
       {
-        name: 'ABR', dur: 14, freq: 12,
+        name: 'ABR',
+        dur: 14,
+        freq: 12,
       },
       {
-        name: 'MAI', dur: 15, freq: 11,
+        name: 'MAI',
+        dur: 15,
+        freq: 11,
       },
       {
-        name: 'JUN', dur: 14, freq: 17,
+        name: 'JUN',
+        dur: 14,
+        freq: 17,
       },
     ],
-    last_checks: [
-      {
-	name: 'Visit to Asthma checkuop',
+    last_checks: [{
+        name: 'Visit to Asthma checkuop',
         description: 'Dr Henry',
         type: 'checkup', // Esse tipo poderia ser um enumerado
-	date: {
+        icon: '/doctor.png',
+        date: {
           start: new Date('2012-01-02'),
           end: null
         }
       },
       {
-	name: 'Visit to Asthma checkuop',
-        description: 'Dr Henry',
+        name: 'Began new medication',
+        description: 'Symicort',
         type: 'medication', // Esse tipo poderia ser um enumerado
-	date: {
-          start: new Date('2012-01-02'),
+        icon: '/pill.png',
+        date: {
+          start: new Date('2011-08-02'),
           end: null
         }
       }
@@ -90,37 +103,48 @@ export const doencasMock = [{
     ],
     medications_history: [ // imagino como se o back end ja mandasse formatado
       {
-        name: 'JAN', dur: 5, freq: 14,
+        name: 'JAN',
+        dur: 5,
+        freq: 14,
       },
       {
-        name: 'MAR', dur: 3, freq: 19,
+        name: 'MAR',
+        dur: 3,
+        freq: 19,
       },
       {
-        name: 'ABR', dur: 14, freq: 2,
+        name: 'ABR',
+        dur: 14,
+        freq: 2,
       },
       {
-        name: 'MAI', dur: 15, freq: 21,
+        name: 'MAI',
+        dur: 15,
+        freq: 21,
       },
       {
-        name: 'JUN', dur: 14, freq: 17,
+        name: 'JUN',
+        dur: 14,
+        freq: 17,
       },
     ],
-    last_checks: [
-      {
-	name: 'Visit to Asthma checkuop',
+    last_checks: [{
+        name: 'Visit to Asthma checkuop',
         description: 'Dr Henry',
         type: 'checkup', // Esse tipo poderia ser um enumerado
-	date: {
+        icon: '/doctor.png',
+        date: {
           start: new Date('2012-01-02'),
           end: null
         }
       },
       {
-	name: 'Visit to Asthma checkuop',
-        description: 'Dr Henry',
+        name: 'Began new medication',
+        description: 'Symicort',
         type: 'medication', // Esse tipo poderia ser um enumerado
-	date: {
-          start: new Date('2012-01-02'),
+        icon: '/pill.png',
+        date: {
+          start: new Date('2011-08-02'),
           end: null
         }
       }
@@ -153,37 +177,48 @@ export const doencasMock = [{
     ],
     medications_history: [ // se o back end ja mandasse formatado, mas poderia fazer um map em outra estrutura... depende do negociado
       {
-        name: 'JAN', dur: 5, freq: 14,
+        name: 'JAN',
+        dur: 5,
+        freq: 14,
       },
       {
-        name: 'MAR', dur: 13, freq: 19,
+        name: 'MAR',
+        dur: 13,
+        freq: 19,
       },
       {
-        name: 'ABR', dur: 4, freq: 2,
+        name: 'ABR',
+        dur: 4,
+        freq: 2,
       },
       {
-        name: 'MAI', dur: 5, freq: 11,
+        name: 'MAI',
+        dur: 5,
+        freq: 11,
       },
       {
-        name: 'JUN', dur: 14, freq: 7,
+        name: 'JUN',
+        dur: 14,
+        freq: 7,
       },
     ],
-    last_checks: [
-      {
-	name: 'Visit to Asthma checkuop',
+    last_checks: [{
+        name: 'Visit to Asthma checkuop',
         description: 'Dr Henry',
         type: 'checkup', // Esse tipo poderia ser um enumerado
-	date: {
+        icon: '/doctor.png',
+        date: {
           start: new Date('2012-01-02'),
           end: null
         }
       },
       {
-	name: 'Visit to Asthma checkuop',
-        description: 'Dr Henry',
+        name: 'Began new medication',
+        description: 'Symicort',
         type: 'medication', // Esse tipo poderia ser um enumerado
-	date: {
-          start: new Date('2012-01-02'),
+        icon: '/pill.png',
+        date: {
+          start: new Date('2011-08-02'),
           end: null
         }
       }

@@ -6,6 +6,7 @@ import {
 import {
   ComposedChart, Line, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer
 } from 'recharts';
+import moment from 'moment';
 
 export default class ButtonComponent extends React.Component {
   constructor(props) {
@@ -17,14 +18,29 @@ export default class ButtonComponent extends React.Component {
     this.indicatorRef = React.createRef();
     this.defaultButtonHeight = 110; // O tamanho do botao para compensar a altura do indicador
     this.defaultIndicatorHeight = 23; // o tamanho do indicador e 23px mas pode mudar de acordo com o dispositivo
+    this.alert = this.alert.bind(this);
+    this.sliceHistory = 2;
+    this.addPagination = () => {
+      this.sliceHistory += 10;
+      this.forceUpdate();
+    }
   }
   getHistory() {
-    return
+    return this.state.data.last_checks.slice(0, this.sliceHistory).map(c => {
+      // add campo de data formatada
+      c['dateFormatted'] = moment(c.date.start).format('MMMM, DD YYYY');
+      return c;
+    })
+  }
+  componentDidMount() {
+    // toda vez que entra atualizo o valor para o inicial de slice
+    this.sliceHistory = 2;
   }
   // Atualizo quando atualiza as props
   componentDidUpdate(prevProps) {
     if (this.props.data !== prevProps.data) {
       this.setState({ data: this.props.data });
+      this.sliceHistory = 2;
     }
   }
   /**
@@ -38,11 +54,15 @@ export default class ButtonComponent extends React.Component {
   }
 
   getIndicatorPosition(percent) {
-    const imageContainer = this.props.imageRef.current ? parseInt(getRemSize(this.props.imageRef.current)): 0;
-    const size = ( imageContainer * parseInt(percent) / 100);
+    const imageContainer = this.props.imageRef.current ? parseInt(getRemSize(this.props.imageRef.current)) : 0;
+    const size = (imageContainer * parseInt(percent) / 100);
     const indicatorContainer = parseInt(getRemSize(this.indicatorRef.current, this.defaultIndicatorHeight))
     const buttonContainer = parseInt(getRemSize(this.props.buttonRef, this.defaultButtonHeight))
-    return (size - buttonContainer/2 - indicatorContainer/2) + 'px' //(ibDifference + iiDifference) + 'px';
+    return (size - buttonContainer / 2 - indicatorContainer / 2) + 'px' //(ibDifference + iiDifference) + 'px';
+  }
+
+  alert() {
+    window.alert('Single Dialog Component');
   }
 
   render() {
@@ -53,7 +73,7 @@ export default class ButtonComponent extends React.Component {
             <div>
               <span ref={this.indicatorRef} className="dialog-indicator" style={
                 {
-                  top: this.getIndicatorPosition(this.state.data ? this.state.data.style.position.top : 0 ),
+                  top: this.getIndicatorPosition(this.state.data ? this.state.data.style.position.top : 0),
                 }
               }>
               </span>
@@ -71,12 +91,9 @@ export default class ButtonComponent extends React.Component {
                     <div className="dialog-middle-medications">
                       <div style={{ display: 'inline' }}>
                         <div className="dialog-middle-medications-container">
-                          <span style={
+                          <span className="dialog-title" style={
                             {
-                              color: '#75C4BE', 
-                              fontFamily: 'NotoSansNormalSemiBold',
                               paddingBottom: '.5rem',
-                              display: 'block'
                             }
                           }>YOUR MEDICATIONS</span>
                           <div style={
@@ -91,12 +108,10 @@ export default class ButtonComponent extends React.Component {
                             }}>Lorem Ipsum</div>
                         </div>
                         <div className="dialog-middle-medications-container">
-                          <span style={
+                          <span className="dialog-title" style={
                             {
-                              color: '#75C4BE', fontFamily: 'NotoSansNormalSemiBold',
                               paddingLeft: '1rem',
-                              paddingBottom: '.5rem',
-                              display: 'block'
+                              paddingBottom: '.5rem'
                             }
                           }>YOUR SYMPTOMS</span>
                           <ul style={
@@ -115,15 +130,14 @@ export default class ButtonComponent extends React.Component {
                           </ul>
                         </div>
                       </div>
-                    <div style={{padding: '.4rem 0'}}>
-                       <button style={{ background: 'transparent', border: 0, fontSize: '.8rem', color: '#7F7F7F'}}>SEE PAST MEDICATIONS &#9660;</button>
-                    </div>  
+                      <div style={{ padding: '.4rem 0' }}>
+                        <button onClick={this.alert} style={{ background: 'transparent', border: 0, fontSize: '.8rem', color: '#7F7F7F', cursor: 'pointer' }}>SEE PAST MEDICATIONS &#9660;</button>
+                      </div>
                     </div>
                   </div>
                   <div style={{ padding: '1rem' }}>
-                    <span style={
+                    <span className="dialog-title" style={
                       {
-                        color: '#75C4BE', fontFamily: 'NotoSansNormalSemiBold',
                         paddingLeft: '1rem'
                       }
                     }>YOUR HISTORY</span>
@@ -159,8 +173,41 @@ export default class ButtonComponent extends React.Component {
                       </ResponsiveContainer>
                     </div>
                   </div>
-                  <div style={{ padding: '1rem' }}>
-
+                  <div style={{ padding: '1rem 3rem' }}>
+                    {
+                      this.state.data && this.state.data.last_checks ?
+                      this.getHistory().map((h, i) => {
+                        return (
+                          <div key={`history${i}`} style={
+                            {
+                              border: '1px solid gray',
+                              borderLeft: 0,
+                              borderRight: 0,
+                              width: '100%',
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              padding: '.5rem 0',
+                              alignItems: 'center',
+                              fontSize: '.8rem',
+                              color: 'gray'
+                            }
+                          }>
+                            <div>{h.dateFormatted}</div>
+                            <div>
+                              <div style={{ fontWeight: 'bold' }}>{h.name}</div>
+                              <div>{h.description}</div>
+                            </div>
+                            <div>
+                              <img style={{ width: '2rem' }} alt="icone" src={h.icon} />
+                            </div>
+                          </div>
+                        )
+                      })
+                      : ('Sem historico')
+                    }
+                    <div style={{ padding: '.4rem 0' }}>
+                      <button onClick={this.addPagination} style={{ background: 'transparent', border: 0, fontSize: '.8rem', color: '#7F7F7F', width: '100%', textAlign: 'right', cursor: 'pointer' }}>&#9660;</button>
+                    </div>
                   </div>
                 </div>
               </div>

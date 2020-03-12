@@ -43,6 +43,8 @@ export default class DesafioP2Component extends React.Component {
     this.state.value = [0 + fixAdditional, 100 + fixAdditional];
     this.setFilter = this.setFilter.bind(this);
     this.selectId = this.selectId.bind(this);
+
+    this.alert = this.alert.bind(this);
     // Trabalhando dessa forma tenho o elemento pra manipular 
     this.buttonRef = React.createRef();
     this.imageRef = React.createRef();
@@ -211,6 +213,10 @@ export default class DesafioP2Component extends React.Component {
       };
     }, initialValue);
   }
+
+  alert() {
+    window.alert('Single Alert');
+  }
   /**
    * Hook
   */
@@ -242,7 +248,7 @@ export default class DesafioP2Component extends React.Component {
                 </div>
                 <div className="main-item">
                   <div style={{ maxWidth: '50%', width: '100%', textAlign: 'right' }}>
-                    <button style={{ margin: 'auto auto auto 0', display: 'block', borderRadius: '50%', border: '2px double #ccc', color: 'gray', height: '1.5rem', width: '1.5rem', cursor: 'pointer' }}>+</button>
+                    <button onClick={this.alert} style={{ margin: 'auto auto auto 0', display: 'block', borderRadius: '50%', border: '2px double #ccc', color: 'gray', height: '1.5rem', width: '1.5rem', cursor: 'pointer' }}>+</button>
                   </div>
                   <div style={{ maxWidth: '50%', width: '100%' }}>
                     <div style={{ width: '80%', margin: 'auto 0 auto auto', padding: '0 .5rem' }}>
