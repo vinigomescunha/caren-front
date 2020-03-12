@@ -1,43 +1,67 @@
 export const getYearsTimestamp = (years) => Date.now() - (86400 * 1000 * 365 * years);
-export const getDefaultTimestamp = () => {
-  return [
-    new Date(getYearsTimestamp(20)).getFullYear(),
-    new Date(getYearsTimestamp(30)).getFullYear()
-  ];
-};
 // lista de doencas em mock
 export const doencasMock = [{
     id: 1,
     title: 'Asma ',
-    description: 'uma das doenças respiratórias crônicas mais comuns, juntamente com a rinite alérgica e a doença pulmonar obstrutiva crônica. As principais características dessa doença pulmonar são dificuldade de respirar, chiado e aperto no peito, respiração curta e rápida',
+    description: 'uma das doenças respiratórias crônicas mais comuns, juntamente com a rinite alérgica e a doença pulmonar obstrutiva crônica. As principais características dessa doença pulmonar são dificuldade de respirar, chiado e aperto no peito, respiração curta e rápida.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel leo at turpis hendrerit scelerisque vitae ut turpis. Nullam at commodo ipsum. Morbi nec dictum leo. Duis pellentesque odio ut lorem scelerisque finibus. Nulla vel suscipit purus, vitae consectetur nisl. Nunc eget lobortis lacus. Maecenas dictum libero sit amet congue fringilla',
     date: {
       start: new Date(getYearsTimestamp(30)), // data de inicio da doenca 30 anos atras
       end: null // caso nao tenha sido erradicada
     },
     medications: [{
-      title: '',
-      description: '',
+      title: 'Symbicort',
+      use: 'One spray in each nostril as need',
       date: {
         start: '',
         end: null
       }
     }],
     symptoms: [
-      'Tosse com ou sem produção de escarro (muco)',
-      'Repuxar a pele entre as costelas durante a respiração (retrações intercostais)',
-      'Deficiência respiratória que piora com exercício ou atividade',
+      'Tosse',
+      'Muco',
       'Chiado',
-      'Falta de ar',
-      'Aperto no peito',
+      'Falta de ar'
     ],
-    medications_history: [{
-      date: {
-        start: '',
-        end: null // nesse caso vou manter a estrutura de data mas nao vou atender 
+    medications_history: [ // imagino como se o back end ja mandasse formatado
+      {
+        name: 'JAN', dur: 5, freq: 14,
+      },
+      {
+        name: 'FEV', dur: 8, freq: 15,
+      },
+      {
+        name: 'MAR', dur: 13, freq: 9,
+      },
+      {
+        name: 'ABR', dur: 14, freq: 12,
+      },
+      {
+        name: 'MAI', dur: 15, freq: 11,
+      },
+      {
+        name: 'JUN', dur: 14, freq: 17,
+      },
+    ],
+    last_checks: [
+      {
+	name: 'Visit to Asthma checkuop',
+        description: 'Dr Henry',
+        type: 'checkup', // Esse tipo poderia ser um enumerado
+	date: {
+          start: new Date('2012-01-02'),
+          end: null
+        }
+      },
+      {
+	name: 'Visit to Asthma checkuop',
+        description: 'Dr Henry',
+        type: 'medication', // Esse tipo poderia ser um enumerado
+	date: {
+          start: new Date('2012-01-02'),
+          end: null
+        }
       }
-    }],
-    condition: '',
-    type: '',
+    ],
     style: {
       position: {
         right: '20%',
@@ -64,14 +88,43 @@ export const doencasMock = [{
     symptoms: [
       'Mal estar'
     ],
-    medications_history: [{
-      date: {
-        start: '',
-        end: null // nesse caso vou manter a estrutura de data mas nao vou atender 
+    medications_history: [ // imagino como se o back end ja mandasse formatado
+      {
+        name: 'JAN', dur: 5, freq: 14,
+      },
+      {
+        name: 'MAR', dur: 3, freq: 19,
+      },
+      {
+        name: 'ABR', dur: 14, freq: 2,
+      },
+      {
+        name: 'MAI', dur: 15, freq: 21,
+      },
+      {
+        name: 'JUN', dur: 14, freq: 17,
+      },
+    ],
+    last_checks: [
+      {
+	name: 'Visit to Asthma checkuop',
+        description: 'Dr Henry',
+        type: 'checkup', // Esse tipo poderia ser um enumerado
+	date: {
+          start: new Date('2012-01-02'),
+          end: null
+        }
+      },
+      {
+	name: 'Visit to Asthma checkuop',
+        description: 'Dr Henry',
+        type: 'medication', // Esse tipo poderia ser um enumerado
+	date: {
+          start: new Date('2012-01-02'),
+          end: null
+        }
       }
-    }],
-    condition: '',
-    type: '',
+    ],
     style: {
       position: {
         right: '40%',
@@ -98,14 +151,43 @@ export const doencasMock = [{
     symptoms: [
       'Mal estar'
     ],
-    medications_history: [{
-      date: {
-        start: '',
-        end: null // nesse caso vou manter a estrutura de data mas nao vou atender 
+    medications_history: [ // se o back end ja mandasse formatado, mas poderia fazer um map em outra estrutura... depende do negociado
+      {
+        name: 'JAN', dur: 5, freq: 14,
+      },
+      {
+        name: 'MAR', dur: 13, freq: 19,
+      },
+      {
+        name: 'ABR', dur: 4, freq: 2,
+      },
+      {
+        name: 'MAI', dur: 5, freq: 11,
+      },
+      {
+        name: 'JUN', dur: 14, freq: 7,
+      },
+    ],
+    last_checks: [
+      {
+	name: 'Visit to Asthma checkuop',
+        description: 'Dr Henry',
+        type: 'checkup', // Esse tipo poderia ser um enumerado
+	date: {
+          start: new Date('2012-01-02'),
+          end: null
+        }
+      },
+      {
+	name: 'Visit to Asthma checkuop',
+        description: 'Dr Henry',
+        type: 'medication', // Esse tipo poderia ser um enumerado
+	date: {
+          start: new Date('2012-01-02'),
+          end: null
+        }
       }
-    }],
-    condition: '',
-    type: '',
+    ],
     style: {
       position: {
         right: '20%',
